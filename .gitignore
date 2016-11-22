@@ -1,0 +1,3 @@
+*.log
+*include*.txt
+ida_tmp_netstat.txt
