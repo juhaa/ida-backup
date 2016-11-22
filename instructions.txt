@@ -1,0 +1,36 @@
+### Backups
+
+## /home/users/jmehtone/scripts/ida_backup/
+# tar_backup.sh	- script to make tar directories ready for backup
+# include.txt	- list of folders to backup
+# ida_transfer.sh	- script to transfer tarballs to ida
+
+
+## Step 1.
+
+# Check the sizes of the directories for unnaturally high sizes.
+# We don't want to transfer raw files here.
+# Especially compare sizes between backups.
+
+du -sB 1G $(cat include.txt) > /home/groups/biowhat/backup_info/dir_sizes_$(date +%F).txt
+
+
+## Step 2.
+
+# If everything seems ok, run tar_backup.sh to create necessary tarballs.
+# This creates a tarball of each directory in the include.txt on their respective first parent directories.
+# When running the first time, script makes level 0 backup tarballs which contain all things currently inside the directories.
+# Also on the first run creates a snapshot file containing metadata of the things inside the tarballs.
+# Second run creates a new tarball consisting of level 1 backup (things that have changed compared to level 0 backup).
+# Further runs update the level 1 backup tarball by comparing changes to level 0 backup.
+# (The level 0 backup tarball should updated at some point, script is not doing it.)
+
+sh tar_backup.sh include.txt
+
+
+# Step 3.
+
+# After tarballs are created, run ida_transfer.sh to transfer the tarballs to IDA.
+# Saves log file of each transfer to /home/groups/biowhat/backup_info/
+
+sh ida_transfer.sh
