@@ -21,7 +21,7 @@ do
 
 	if [ ! -f "$snap" ] ; then
 		echo "Snapshot file not found. Creating it..."
-		echo "Level 0 backup not found. Creating it..."
+		echo "Creating level 0 backup..."
 		tar -g $snap -cvf $tar0 $folder
 		echo "Created snapshot file $snap"
 		echo "Created level 0 backup $tar0"
