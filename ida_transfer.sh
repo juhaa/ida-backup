@@ -24,9 +24,9 @@ do
 	ida_path=$ida_dir$path
 	backup_path=$files_dir$path
 	name=${folder##*/}
-	tar0="${backup_path%/*}/${name}-0.tar"
-	tar1="${backup_path%/*}/${name}-1.tar"
-	snap="${backup_path%/*}/${name}.snar"
+	tar0="${backup_path}/${name}-0.tar"
+	tar1="${backup_path}/${name}-1.tar"
+	snap="${backup_path}/${name}.snar"
 
 	echo "Starting transfer of $folder"
 
