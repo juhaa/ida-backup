@@ -26,7 +26,6 @@ do
 	name=${folder##*/}
 	tar0="${backup_path}/${name}-0.tar"
 	tar1="${backup_path}/${name}-1.tar"
-	snap="${backup_path}/${name}.snar"
 
 	echo "Starting transfer of $folder"
 
