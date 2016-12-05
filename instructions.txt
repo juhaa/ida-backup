@@ -12,7 +12,7 @@
 # We don't want to transfer raw files here.
 # Especially compare sizes between backups.
 
-du -sB 1G $(cat include.txt) > /home/groups/biowhat/backup_info/logs/dir_sizes_$(date +%F).txt
+du -sB 1G $(cat include.txt) > /home/groups/biowhat/backup_info/logs/dir_size_logs/dir_sizes_$(date +%F).txt
 
 
 ## Step 2.
@@ -31,7 +31,7 @@ sh tar_backup.sh include.txt
 # Step 3.
 
 # After tarballs are created, run ida_transfer.sh to transfer the tarballs to IDA.
-# Saves log file of each transfer to /home/groups/biowhat/backup_info/
+# Saves log file of each transfer to /home/groups/biowhat/backup_info/logs/
 
 sh ida_transfer.sh include.txt
 
