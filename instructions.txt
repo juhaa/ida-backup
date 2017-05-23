@@ -23,7 +23,7 @@ du -sB 1G $(cat include.txt) > /home/groups/biowhat/backup_info/logs/dir_size_lo
 # Also on the first run creates a snapshot file containing metadata of the things inside the tarballs.
 # Second run creates a new tarball consisting of level 1 backup (things that have changed compared to level 0 backup).
 # Further runs update the level 1 backup tarball by comparing changes to level 0 backup.
-# (The level 0 backup tarball should updated at some point, script is not doing it.)
+# (The level 0 backup tarball should be updated at some point, script is not doing it.)
 
 sh tar_backup.sh include.txt
 
@@ -35,3 +35,15 @@ sh tar_backup.sh include.txt
 
 sh ida_transfer.sh include.txt
 
+
+# Extraction
+
+# If you need to extract the tarballs to retrieve files, first do level-0 extraction:
+
+tar -g /dev/null -xvf tarball-0.tar
+
+# Then level-1 (this only if you need more recent files not available in level-0 backup):
+
+tar -g /dev/null -xvf tarball-1.tar
+
+# These commands will create the whole directory structure (starting from 'home') to your working directory (this is not a problem).

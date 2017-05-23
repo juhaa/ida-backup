@@ -11,8 +11,6 @@ backup_dir="/home/groups/biowhat/backup_info/"
 logs_dir="${backup_dir}logs/"
 files_dir="${backup_dir}files/"
 
-[ ! -d "${logs_dir}/$(date +%F)/" ] && ( mkdir "${logs_dir}/$(date +%F)/" )
-
 while IFS= read -r folder
 do
 
