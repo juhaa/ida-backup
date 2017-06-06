@@ -22,20 +22,20 @@ do
 	echo "Compressing directory $folder"
 
 	if [ ! -f "$snap" ] ; then
-		echo "Snapshot file not found. Creating it..." |& tee $log0
-		echo "Creating level 0 backup..." |& tee $log0
-		date |& tee $log0
-		tar -g $snap -czpf $tar0 $folder |& tee $log0
-		echo "Created snapshot file $snap" |& tee $log0
-		echo "Created level 0 backup $tar0" |& tee $log0
-		date |& tee $log0
+		echo "Snapshot file not found. Creating it..." |& tee -a $log0
+		echo "Creating level 0 backup..." |& tee -a $log0
+		date |& tee -a $log0
+		tar -g $snap -czpf $tar0 $folder |& tee -a $log0
+		echo "Created snapshot file $snap" |& tee -a $log0
+		echo "Created level 0 backup $tar0" |& tee -a $log0
+		date |& tee -a $log0
 	else
-		echo "Snapshot file found." |& tee $log1
-		echo "Creating level 1 backup..." |& tee $log1
-		date |& tee $log1
-		tar -g $snap -czpf $tar1 $folder |& tee $log1
-		echo "Created level 1 backup $tar1" |& tee $log1
-		date |& tee $log1
+		echo "Snapshot file found." |& tee -a $log1
+		echo "Creating level 1 backup..." |& tee -a $log1
+		date |& tee -a $log1
+		tar -g $snap -czpf $tar1 $folder |& tee -a $log1
+		echo "Created level 1 backup $tar1" |& tee -a $log1
+		date |& tee -a $log1
 	fi
 	
 	echo "Compression done for $folder"
