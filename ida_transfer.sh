@@ -4,12 +4,12 @@
 #
 # Usage: sh ida_transfer.sh [txt file of directories to transfer]
 #
-# Nov 2016, Juha Mehtonen
+# Jun 2017, Juha Mehtonen
 
-ida_dir="/ida/uef/sysgen/"
+ida_dir="/ida/uef/sysgen/new_backups/"
 backup_dir="/home/groups/biowhat/backup_info/"
 logs_dir="${backup_dir}logs/"
-files_dir="${backup_dir}files/"
+files_dir="${backup_dir}new_tars/"
 
 while IFS= read -r folder
 do
@@ -22,8 +22,8 @@ do
 	ida_path=$ida_dir$path
 	backup_path=$files_dir$path
 	name=${folder##*/}
-	tar0="${backup_path}/${name}-0.tar"
-	tar1="${backup_path}/${name}-1.tar"
+	tar0="${backup_path}/${name}-0.tar.gz"
+	tar1="${backup_path}/${name}-1.tar.gz"
 
 	echo "Starting transfer of $folder"
 
