@@ -16,7 +16,8 @@
 #     transfers assuming users remember/are able to use the wrappper and
 #     are able to provide the transfer logs
 #
-# Taneli Riitaoja 2015-2016 / CSC - IT Center for Science Ltd.
+# Original author: Taneli Riitaoja 2015-2016 / CSC - IT Center for Science Ltd.
+# Modified by: Juha Mehtonen 2017 
 #
 #
 # Note: Change the variables in the "User settings" section to suit your needs
@@ -68,7 +69,8 @@ LFRESTART_TEMPLATE="${BASEDIR}/iput_lfrestart_file"
 # Note: Threads set to 1, so iRODS cli uses only 1247 port (no high ports like
 # 20000:20200) to get around "smart" firewall/NAT problems. If you change this,
 # be sure to also change the PORT value
-IPUT_OPTS="-N 0 -T --lfrestart ${LFRESTART_TEMPLATE}_${identifier} --retries 3"
+RETRIES=3
+IPUT_OPTS="-N 0 -T --lfrestart ${LFRESTART_TEMPLATE}_${identifier} --retries ${RETRIES}"
 # ==========  END User settings  ==========
 
 
@@ -539,7 +541,7 @@ Arguments given for script: $ARGS
 
 Edit script to change the iRODS zone (default: ida), iput options and log file locations
 
-Usage: ${BASH_SOURCE[0]} [-hvd] -l "<local directory|file path>" -r "<iRODS directory>"
+Usage: ${BASH_SOURCE[0]} [OPTION] -l "<local directory|file path>" -r "<iRODS directory>"
 
     -l "<local path>"       Local directory or file path (source)
                             Use quotes (") if your path contains spaces or special characters 
@@ -556,6 +558,8 @@ Usage: ${BASH_SOURCE[0]} [-hvd] -l "<local directory|file path>" -r "<iRODS dire
     -c                      Confirm the user prompt automatically (not recommended)
     -d                      Debug mode: Logs everything to $DEBUGLOGFILE
     -n                      Dry run: do not create directories or transfer files
+    -a "<log file>"         Local log file (Default: ${BASEDIR}/${ZONE}_transfer.log)
+    -b <retries>            Max number of retries during transfer (Default: 3)
 
 Example:
     Command: ${BASH_SOURCE[0]} -l "/home/user/mydirectory" -r "/ida/organization/project/researchdata"
@@ -576,9 +580,10 @@ function bailout ()
 
 lgiven=false
 rgiven=false
+retriesgiven=false
 
 # Check arguments and initialize
-while getopts hgvcndl:r: OPTIONS
+while getopts hgvcndl:r:a:b: OPTIONS
 do
     case $OPTIONS in
         h) bailout ;;
@@ -603,6 +608,8 @@ do
            lgiven=true
            ;;
         r) TARGET_PATH=`echo ${OPTARG%/}`; rgiven=true ;;
+        a) LOGFILE="${OPTARG}" ;;
+        b) RETRIES="${OPTARG}"; retriesgiven=true ;;
         \?) "Option -$OPTARG not supported"; bailout ;;
         :) "Option -$OPTARG requires arguments"; bailout ;;
     esac
@@ -612,6 +619,16 @@ if [[ "$lgiven" == false ]] || [[ "$rgiven" == false ]]
 then
     echo "ERROR: Invalid arguments given for script"
     bailout
+fi
+
+if [[ "$retriesgiven" == true ]]
+then
+    re="^[1-9][0-9]*$"
+    if ! [[ "$RETRIES" =~ $re ]]
+    then
+        echo "ERROR: Invalid argument given for number or retries"
+        bailout
+    fi
 fi
 
 if [[ "$GLOB" == false && ! -d "$SOURCE_PATH" && ! -f "$SOURCE_PATH" ]]
@@ -630,6 +647,9 @@ elif [[ -f "$SOURCE_PATH" ]]
 then
     SOURCE_IS_FILE=true
 fi
+
+# Set parameters again (need to do this, if number of retries given as param).
+IPUT_OPTS="-N 0 -T --lfrestart ${LFRESTART_TEMPLATE}_${identifier} --retries ${RETRIES}"
 
 # Launch
 transferMain
