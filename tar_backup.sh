@@ -2,22 +2,22 @@
 #
 # Usage: sh tar_backup.sh [txt file of directories to backup]
 #
-# Jun 2017, Juha Mehtonen
+# Jan 2018, Juha Mehtonen
 
-files_dir="/home/groups/biowhat/backup_info/new_tars/"
+files_dir="/research/groups/sysgen/PROJECTS/projects_data_management/backups/"
 
 while IFS= read -r folder
 do
 
 	name=${folder##*/}
-	backup_path=$files_dir${folder##/home/groups/biowhat/}
-	[ ! -d "$backup_path" ] && ( mkdir -p "$backup_path" && echo "Created dir '$backup_path'" || ( c=$?; echo "Unable to create  dir '$backup_path'! Exiting..."; (exit $c) ))
-	
+	backup_path=$files_dir${folder##/research/groups/sysgen/}
+	[ ! -d "$backup_path" ] && mkdir -p "$backup_path"
+
 	snap="${backup_path}/${name}.snar"
-	tar0="${backup_path}/${name}-0.tar.gz"
-	tar1="${backup_path}/${name}-1.tar.gz"
-	log0="${backup_path}/${name}-0.log"
-	log1="${backup_path}/${name}-1.log"
+	tar0="${backup_path}/${name}-0_$(date +%F).tar.gz"
+	tar1="${backup_path}/${name}-1_$(date +%F).tar.gz"
+	log0="${backup_path}/${name}-0_$(date +%F).log"
+	log1="${backup_path}/${name}-1_$(date +%F).log"
 
 	echo "Compressing directory $folder"
 

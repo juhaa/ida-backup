@@ -648,6 +648,18 @@ then
     SOURCE_IS_FILE=true
 fi
 
+# Create logfile if doesn't already exist
+logfile_path="$(dirname $LOGFILE)"
+if [ ! -d "$logfile_path" ]
+then
+    mkdir -p "$logfile_path"
+fi
+
+if [ ! -f "$LOGFILE" ]
+then
+    touch "$LOGFILE"
+fi
+
 # Set parameters again (need to do this, if number of retries given as param).
 IPUT_OPTS="-N 0 -T --lfrestart ${LFRESTART_TEMPLATE}_${identifier} --retries ${RETRIES}"
 
