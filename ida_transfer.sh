@@ -12,6 +12,9 @@ logs_dir="${backup_dir}transfer_logs/server_to_ida/"
 files_dir="${backup_dir}backups/"
 retries=8
 
+# Get script folder
+SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 while IFS= read -r folder
 do
 
@@ -24,7 +27,7 @@ do
 
 	echo "Starting transfer of backup of $folder"
 
-	./iput_wrapper.bash -l $backup_path -r $ida_path -v -c -a $logfile -b $retries
+	$SCRIPTS/iput_wrapper.bash -l $backup_path -r $ida_path -v -c -a $logfile -b $retries
 
 	echo "Transfer done. Check the log: $logfile"
 

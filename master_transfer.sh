@@ -4,12 +4,15 @@
 #
 # Jan 2018, Juha Mehtonen
 
+# Get script folder
+SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 # 1: Make tar backups
-./tar_backup.sh $1
+$SCRIPTS/tar_backup.sh $1
 
 # 2: Transfer tarballs to NAS
-./nas_transfer.sh $1
+$SCRIPTS/nas_transfer.sh $1
 
 # 3: Transfer tarballs to IDA
-./ida_transfer.sh $1
+$SCRIPTS/ida_transfer.sh $1
 
