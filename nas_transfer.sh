@@ -16,7 +16,7 @@ while IFS= read -r folder
 do
 
 	# Set paths and names
-	path=${folder##/research/groups/sysgen/}
+	path=${folder##/research/groups/}
 	nas_path=$nas_dir$path
 	backup_path=$files_dir$path
 	name=${folder##*/}

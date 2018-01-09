@@ -10,7 +10,7 @@ while IFS= read -r folder
 do
 
 	name=${folder##*/}
-	backup_path=$files_dir${folder##/research/groups/sysgen/}
+	backup_path=$files_dir${folder##/research/groups/}
 	[ ! -d "$backup_path" ] && mkdir -p "$backup_path"
 
 	snap="${backup_path}/${name}.snar"

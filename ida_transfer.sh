@@ -19,7 +19,7 @@ while IFS= read -r folder
 do
 
 	# Set paths and names
-	path=${folder##/research/groups/sysgen/}
+	path=${folder##/research/groups/}
 	ida_path=$ida_dir$path
 	backup_path=$files_dir$path
 	name=${folder##*/}
