@@ -25,7 +25,7 @@ do
 		echo "Snapshot file not found. Creating it..." |& tee -a $log0
 		echo "Creating level 0 backup..." |& tee -a $log0
 		date |& tee -a $log0
-		tar -g $snap -czpf $tar0 $folder |& tee -a $log0
+		tar -g $snap -czpf $tar0 $folder --exclude="*bam" |& tee -a $log0
 		echo "Created snapshot file $snap" |& tee -a $log0
 		echo "Created level 0 backup $tar0" |& tee -a $log0
 		date |& tee -a $log0
@@ -33,7 +33,7 @@ do
 		echo "Snapshot file found." |& tee -a $log1
 		echo "Creating level 1 backup..." |& tee -a $log1
 		date |& tee -a $log1
-		tar -g $snap -czpf $tar1 $folder |& tee -a $log1
+		tar -g $snap -czpf $tar1 $folder --exclude="*bam" |& tee -a $log1
 		echo "Created level 1 backup $tar1" |& tee -a $log1
 		date |& tee -a $log1
 	fi
