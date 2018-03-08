@@ -4,7 +4,7 @@
 #
 # Usage: sh nas_transfer.sh [txt file of directories to transfer]
 #
-# Jan 2018, Juha Mehtonen
+# Mar 2018, Juha Mehtonen
 
 nas_dir="/media/biowhat/backups_2018/"
 backup_dir="/research/groups/sysgen/PROJECTS/projects_data_management/"
@@ -31,7 +31,7 @@ do
 
 	echo "Starting transfer of backup of $folder"
 
-	rsync -avPu --log-file=$logfile --rsync-path="mkdir -p $nas_path && rsync" $backup_path/ biowhat@10.139.24.204:$nas_path
+	rsync -avPu --stats --log-file=$logfile --rsync-path="mkdir -p $nas_path && rsync" $backup_path/ biowhat@10.139.24.204:$nas_path
 
 	echo "Transfer done. Check the log: $logfile"
 
