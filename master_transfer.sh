@@ -4,11 +4,28 @@
 #
 # Jan 2018, Juha Mehtonen
 
+# A POSIX variable
+OPTIND=1
+
+# Initialize variable
+exclude=0
+
+while getopts "e" opt
+do
+        case "$opt" in
+        e)      exclude=1
+                ;;
+        esac
+done
+
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
+
 # Get script folder
 SCRIPTS="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # 1: Make tar backups
-$SCRIPTS/tar_backup.sh $1
+[ $exclude = 1 ] && $SCRIPTS/tar_backup.sh -e $1 || $SCRIPTS/tar_backup.sh $1
 
 # 2: Transfer tarballs to NAS
 $SCRIPTS/nas_transfer.sh $1

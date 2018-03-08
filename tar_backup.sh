@@ -4,6 +4,23 @@
 #
 # Jan 2018, Juha Mehtonen
 
+# A POSIX variable
+OPTIND=1
+
+# Initialize variable
+exclude=0
+
+while getopts "e" opt
+do
+	case "$opt" in
+	e)	exclude=1
+		;;
+	esac
+done
+
+shift $((OPTIND-1))
+[ "$1" = "--" ] && shift
+
 files_dir="/research/groups/sysgen/PROJECTS/projects_data_management/backups/"
 
 while IFS= read -r folder
@@ -25,7 +42,12 @@ do
 		echo "Snapshot file not found. Creating it..." |& tee -a $log0
 		echo "Creating level 0 backup..." |& tee -a $log0
 		date |& tee -a $log0
-		tar -g $snap -czpf $tar0 $folder --exclude="*bam" |& tee -a $log0
+		if [ $exclude = 1 ]
+		then
+			tar -g $snap -czpf $tar0 $folder --exclude="*bam" |& tee -a $log0
+		else
+			tar -g $snap -czpf $tar0 $folder |& tee -a $log0
+		fi
 		echo "Created snapshot file $snap" |& tee -a $log0
 		echo "Created level 0 backup $tar0" |& tee -a $log0
 		date |& tee -a $log0
@@ -33,7 +55,12 @@ do
 		echo "Snapshot file found." |& tee -a $log1
 		echo "Creating level 1 backup..." |& tee -a $log1
 		date |& tee -a $log1
-		tar -g $snap -czpf $tar1 $folder --exclude="*bam" |& tee -a $log1
+		if [ $exclude = 1 ]
+		then
+			tar -g $snap -czpf $tar1 $folder --exclude="*bam" |& tee -a $log1
+		else
+			tar -g $snap -czpf $tar1 $folder |& tee -a $log1
+		fi
 		echo "Created level 1 backup $tar1" |& tee -a $log1
 		date |& tee -a $log1
 	fi
