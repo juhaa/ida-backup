@@ -44,9 +44,9 @@ do
 		date |& tee -a $log0
 		if [ $exclude = 1 ]
 		then
-			tar -g $snap -czpf $tar0 $folder --exclude="*bam" --exclude="*dask-worker-space*" --exclude=".DS_Store" |& tee -a $log0
+			tar -g $snap -czpf $tar0 $folder --exclude="*bam" --exclude="*dask-worker-space*" --exclude=".DS_Store" --exclude="*SC_RNA_COUNTER_CS*" |& tee -a $log0
 		else
-			tar -g $snap -czpf $tar0 $folder --exclude="*dask-worker-space*" --exclude=".DS_Store" |& tee -a $log0
+			tar -g $snap -czpf $tar0 $folder --exclude="*dask-worker-space*" --exclude=".DS_Store" --exclude="*SC_RNA_COUNTER_CS*" |& tee -a $log0
 		fi
 		echo "Created snapshot file $snap" |& tee -a $log0
 		echo "Created level 0 backup $tar0" |& tee -a $log0
