@@ -2,3 +2,5 @@
 iput_wrapper/
 *.out
 *.txt
+ida2-command-line-tools/
+*~
