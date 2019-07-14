@@ -25,6 +25,11 @@ files_dir="/research/groups/sysgen/PROJECTS/projects_data_management/backups/"
 
 while IFS= read -r folder
 do
+	
+	if [ ! -f $folder ] ; then
+		echo "Folder $folder doesn't exist!"
+		break
+	fi
 
 	name=${folder##*/}
 	backup_path=$files_dir${folder##/research/groups/}
