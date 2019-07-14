@@ -31,7 +31,7 @@ do
 
 	echo "Starting transfer of backup of $folder"
 
-	rsync -avPu --stats --log-file=$logfile --rsync-path="mkdir -p $nas_path && rsync" $backup_path/ biowhat@10.139.24.204:$nas_path
+	rsync -amu --stats --log-file=$logfile --rsync-path="mkdir -p $nas_path && rsync" $backup_path/ biowhat@10.139.24.204:$nas_path
 
 	echo "Transfer done. Check the log: $logfile"
 
