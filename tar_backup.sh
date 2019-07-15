@@ -28,7 +28,7 @@ do
 	
 	if [ ! -f $folder ] ; then
 		echo "Folder $folder doesn't exist!"
-		break
+		continue
 	fi
 
 	name=${folder##*/}
