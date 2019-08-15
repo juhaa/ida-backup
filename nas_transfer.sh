@@ -10,7 +10,6 @@ nas_dir="/media/biowhat/backups_2018/"
 backup_dir="/research/groups/sysgen/PROJECTS/projects_data_management/"
 logs_dir="${backup_dir}transfer_logs/server_to_nas/"
 files_dir="${backup_dir}backups/"
-retries=8
 
 while IFS= read -r folder
 do
